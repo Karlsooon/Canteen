@@ -21,7 +21,8 @@ public class SecurityConfig {
                 );
 
         http
-                .oauth2ResourceServer();
+                .oauth2ResourceServer()
+                .jwt();
 
 
 
