@@ -20,7 +20,8 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 );
 
-
+        http
+                .oauth2ResourceServer();
 
 
 
