@@ -1,6 +1,6 @@
 package com.karakat.spring.Canteen.model;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +13,13 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class Order {
+    @Id
     private Long id;
+    @ManyToOne
+    @JoinColumn(name = "userId", referencedColumnName = "id")
     private User user;
+    @ManyToMany
+    @JoinTable(name = "order_dish", joinColumns=@JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "dish_id"))
     private List<Dish> dishList;
     private String status;
     private Timestamp localDateTime;

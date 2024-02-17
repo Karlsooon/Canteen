@@ -1,5 +1,6 @@
 package com.karakat.spring.Canteen.model;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class Payment {
+    @Id
     private Long id;
     private Order order;
     private Double amount;
