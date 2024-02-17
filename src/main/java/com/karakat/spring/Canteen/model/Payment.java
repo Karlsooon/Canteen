@@ -1,21 +1,21 @@
 package com.karakat.spring.Canteen.model;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class User {
+public class Payment {
     private Long id;
-    private String studentId;
-    private String name;
-    private String surname;
-    private String password;
-    private String email;
-    private String role;
+    private Order order;
+    private Double amount;
+    private String status;
+    private Timestamp localDateTime;
 }

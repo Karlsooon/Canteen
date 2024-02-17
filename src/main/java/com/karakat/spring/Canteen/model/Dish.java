@@ -10,12 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class User {
+public class Dish {
     private Long id;
-    private String studentId;
     private String name;
-    private String surname;
-    private String password;
-    private String email;
-    private String role;
+    private Double price;
+    private String description;
+    private String image;
+    private String category;
 }
