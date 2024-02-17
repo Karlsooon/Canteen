@@ -2,7 +2,6 @@ package com.karakat.spring.Canteen.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +22,7 @@ public class Dish {
     private String image;
     private String category;
     @ManyToMany(mappedBy = "dishList")
-    private List<Order> orderList;
+    private List<Orders> ordersList;
     @ManyToMany(mappedBy = "dishList")
     private List<OrderHistory> orderHistoryList;
 }
