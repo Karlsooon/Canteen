@@ -7,6 +7,7 @@ import com.karakat.spring.Canteen.model.Dish;
 import com.karakat.spring.Canteen.repository.DishRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class DishService {
     private final DishRepository dishRepository;
     private final DishMapper dishMapper;
+    @Transactional(readOnly = true)
 
     public List<DishDto> findAll(){
         List<Dish> dishList = dishRepository.findAll();
@@ -26,6 +28,7 @@ public class DishService {
         return dishMapper.toDto(dishList);
 
     }
+    @Transactional(readOnly = true)
 
     public DishDto findById(Long id){
         Dish dish=dishRepository.findById(id)
@@ -33,6 +36,13 @@ public class DishService {
 
         return dishMapper.toDto(dish);
 
+    }
+    @Transactional
+
+    public DishDto save(DishDto dishDto){
+        Dish save = dishRepository.save(dishMapper.toEntity(dishDto));
+        dishDto.setId(save.getId());
+        return dishDto;
     }
 
 

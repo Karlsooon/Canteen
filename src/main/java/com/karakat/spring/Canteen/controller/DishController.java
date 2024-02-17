@@ -25,4 +25,11 @@ public class DishController {
 
     }
 
+    @PostMapping("/create")
+    public void createDish(@RequestBody DishDto dishDto){
+        dishService.save(dishDto);
+
+
+    }
+
 }
