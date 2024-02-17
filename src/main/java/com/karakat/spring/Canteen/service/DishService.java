@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,4 +26,14 @@ public class DishService {
         return dishMapper.toDto(dishList);
 
     }
+
+    public DishDto findById(Long id){
+        Dish dish=dishRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("product with this id "+id+"not found"));
+
+        return dishMapper.toDto(dish);
+
+    }
+
+
 }

@@ -3,9 +3,7 @@ package com.karakat.spring.Canteen.controller;
 import com.karakat.spring.Canteen.dto.DishDto;
 import com.karakat.spring.Canteen.service.DishService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,6 +17,12 @@ public class DishController {
     @GetMapping("/all")
     public List<DishDto> findAll(){
         return dishService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public DishDto findById(@PathVariable Long id){
+       return dishService.findById(id);
+
     }
 
 }
