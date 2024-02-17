@@ -23,4 +23,7 @@ public class Order {
     private List<Dish> dishList;
     private String status;
     private Timestamp localDateTime;
+    @OneToOne
+    @JoinColumn(name = "payment_id", referencedColumnName = "id")
+    private Payment payment;
 }
