@@ -8,7 +8,9 @@ import com.karakat.spring.Canteen.repository.DishRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +19,8 @@ import java.util.Optional;
 public class DishService {
     private final DishRepository dishRepository;
     private final DishMapper dishMapper;
+    private final StorageService storageService;
+
     @Transactional(readOnly = true)
 
     public List<DishDto> findAll(){
@@ -38,10 +42,15 @@ public class DishService {
 
     }
     @Transactional
-
-    public DishDto save(DishDto dishDto){
-        Dish save = dishRepository.save(dishMapper.toEntity(dishDto));
-        dishDto.setId(save.getId());
+    public DishDto save(DishDto dishDto, MultipartFile imageFile) throws IOException {
+        // Store the image file and get its URL
+        String imageUrl = storageService.store(imageFile);
+        // Set the image URL in the DishDto
+        dishDto.setImage(imageUrl);
+        // Save the dish entity
+        Dish savedDish = dishRepository.save(dishMapper.toEntity(dishDto));
+        // Set the ID from the saved entity
+        dishDto.setId(savedDish.getId());
         return dishDto;
     }
 

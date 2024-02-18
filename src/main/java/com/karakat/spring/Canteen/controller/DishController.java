@@ -5,7 +5,9 @@ import com.karakat.spring.Canteen.service.DishService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -29,11 +31,9 @@ public class DishController {
     }
 
     @PostMapping("/create")
-//    @PreAuthorize("hasRole('client_admin')")
-    public void createDish(@RequestBody DishDto dishDto){
-        dishService.save(dishDto);
-
-
+    //    @PreAuthorize("hasRole('client_admin')")
+    public DishDto createDish(@RequestBody DishDto dishDto, @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
+        return dishService.save(dishDto, imageFile);
     }
 
 }
