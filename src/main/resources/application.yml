@@ -31,5 +31,5 @@ spring:
 jwt:
   auth:
     converter:
-      resource-id: alibou-rest-api
+      resource-id: CanteenWeb
       principle-attribute: preferred_username
