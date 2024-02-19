@@ -60,10 +60,9 @@ public class DishService {
         dish.setCategory(dishDto.getCategory());
         dish.setPrice(dishDto.getPrice());
         dish.setCategory(dishDto.getCategory());
-//        if(dishDt)
-//
-//
-//        }
+
+        Dish updated = dishRepository.save(dish);
+        return dishMapper.toDto(updated);
 
     }
 }
