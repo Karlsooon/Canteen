@@ -52,4 +52,18 @@ public class DishService {
     }
 
 
+    @Transactional
+    public DishDto updateDish(DishDto dishDto) {
+        Long id = dishDto.getId();
+        Dish dish=dishRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("dish with id: "+id+" doesnt exist"));
+        dish.setName(dishDto.getName());
+        dish.setCategory(dishDto.getCategory());
+        dish.setPrice(dishDto.getPrice());
+        dish.setCategory(dishDto.getCategory());
+//        if(dishDt)
+//
+//
+//        }
+
+    }
 }

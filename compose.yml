@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  mysql:
+    container_name: canteenweb-mysql
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: K150205k
+      MYSQL_DATABASE: canteen
+      MYSQL_USER: root
+      MYSQL_PASSWORD: K150205k
+    ports:
+      - "3306:3306"
+    restart: unless-stopped
+
+  keycloak:
+    container_name: canteenweb-keycloak
+    image: sleighzy/keycloak
+    environment:
+      DB_VENDOR: MYSQL
+      DB_ADDR: mysql
+      DB_DATABASE: canteen
+      DB_USER: root
+      DB_PASSWORD: K150205k
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin123
+    ports:
+      - "8484:8080"
+    depends_on:
+      - mysql
+    links:
+      - "mysql:mysql"

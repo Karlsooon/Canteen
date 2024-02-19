@@ -39,4 +39,9 @@ public class DishController {
         return ResponseEntity.status(HttpStatus.CREATED).body(dishService.save(dishDto, imageFile));
     }
 
+    @PostMapping(value = "/update")
+    public ResponseEntity<DishDto> updateDish(@ModelAttribute DishDto dishDto){
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dishService.updateDish(dishDto));
+    }
+
 }
