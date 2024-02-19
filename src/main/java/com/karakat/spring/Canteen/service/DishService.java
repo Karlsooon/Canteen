@@ -22,7 +22,6 @@ public class DishService {
     private final StorageService storageService;
 
     @Transactional(readOnly = true)
-
     public List<DishDto> findAll(){
         List<Dish> dishList = dishRepository.findAll();
         if(dishList.isEmpty()){
@@ -42,15 +41,13 @@ public class DishService {
 
     }
     @Transactional
-    public DishDto save(DishDto dishDto, MultipartFile imageFile) throws IOException {
-        // Store the image file and get its URL
+    public DishDto save(DishDto dishDto, MultipartFile imageFile) {
         String imageUrl = storageService.store(imageFile);
-        // Set the image URL in the DishDto
-        dishDto.setImage(imageUrl);
-        // Save the dish entity
-        Dish savedDish = dishRepository.save(dishMapper.toEntity(dishDto));
-        // Set the ID from the saved entity
+        var entity = dishMapper.toEntity(dishDto);
+        entity.setImage(imageUrl);
+        Dish savedDish = dishRepository.save(entity);
         dishDto.setId(savedDish.getId());
+
         return dishDto;
     }
 

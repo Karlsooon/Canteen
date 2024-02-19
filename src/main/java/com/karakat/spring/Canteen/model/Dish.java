@@ -21,7 +21,7 @@ public class Dish {
     private Double price;
     private String description;
     @Lob
-    private String image; // New field for storing image content
+    private String image;
     private String category;
     @ManyToMany(mappedBy = "dishList")
     private List<Orders> ordersList;

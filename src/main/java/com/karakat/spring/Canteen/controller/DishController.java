@@ -3,6 +3,9 @@ package com.karakat.spring.Canteen.controller;
 import com.karakat.spring.Canteen.dto.DishDto;
 import com.karakat.spring.Canteen.service.DishService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,10 +33,10 @@ public class DishController {
 
     }
 
-    @PostMapping("/create")
+    @PostMapping(value = "/create", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     //    @PreAuthorize("hasRole('client_admin')")
-    public DishDto createDish(@RequestBody DishDto dishDto, @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
-        return dishService.save(dishDto, imageFile);
+    public ResponseEntity<DishDto> createDish(@ModelAttribute DishDto dishDto, @RequestParam("image") MultipartFile imageFile) throws IOException {
+        return ResponseEntity.status(HttpStatus.CREATED).body(dishService.save(dishDto, imageFile));
     }
 
 }
