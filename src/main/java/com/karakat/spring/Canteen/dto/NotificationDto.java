@@ -4,7 +4,9 @@ import com.karakat.spring.Canteen.model.User;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Data;
 
+@Data
 public class NotificationDto {
     @Id
     private Long id;
