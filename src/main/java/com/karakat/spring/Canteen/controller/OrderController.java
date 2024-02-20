@@ -1,9 +1,12 @@
 package com.karakat.spring.Canteen.controller;
 
+//import com.karakat.spring.Canteen.dto.OrderDto;
 import com.karakat.spring.Canteen.dto.OrderDto;
+import com.karakat.spring.Canteen.dto.OrderDtoRequest;
 import com.karakat.spring.Canteen.service.impl.OrderServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -31,9 +34,11 @@ public class OrderController {
     }
 
     @PostMapping("/create")
-    public OrderDto createOrder(@RequestBody OrderDto orderDto) {
-        return orderServiceImpl.createOrder(orderDto);
+    public ResponseEntity<OrderDto> createOrder(@RequestBody OrderDtoRequest orderDtoRequest) {
+        OrderDto createdOrderDto = orderServiceImpl.createOrder(orderDtoRequest);
+        return ResponseEntity.ok(createdOrderDto);
     }
+
 
     @DeleteMapping("/{id}/delete")
     public void deleteOrder(@PathVariable Long id) {

@@ -16,7 +16,7 @@ public class NotificationController {
     private final NotificationServiceImpl notificationServiceImpl;
 
     @PostMapping("/create")
-    public NotificationDto createNotification(@RequestBody NotificationDto notificationDto) {
+    public NotificationDto createNotification(@RequestParam NotificationDto notificationDto) {
         return notificationServiceImpl.createNotification(notificationDto);
     }
 
