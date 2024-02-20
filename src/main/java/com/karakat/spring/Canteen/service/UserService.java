@@ -19,7 +19,7 @@ public interface UserService {
 
     void addOrderToUser(Long id,List<Long> orderDtoIds);
 
-    void addNotificationToUser(NotificationDto notificationDto);
+    void addNotificationToUser(Long id,List<Long> notificationDto);
 
     //order history automatically when dishList ordered
 

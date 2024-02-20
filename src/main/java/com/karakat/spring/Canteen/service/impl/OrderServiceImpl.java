@@ -12,23 +12,27 @@ import com.karakat.spring.Canteen.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
     private final DishRepository dishRepository;
     @Override
+    @Transactional(readOnly = true)
     public List<OrderDto> allOrders() {
         List<Orders> orders = orderRepository.findAll();
         return orderMapper.toDto(orders);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public OrderDto getOrderById(Long id) {
         Orders order = orderRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Order does not exist"));
         return orderMapper.toDto(order);

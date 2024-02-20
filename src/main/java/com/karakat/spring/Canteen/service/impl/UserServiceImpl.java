@@ -5,14 +5,18 @@ import com.karakat.spring.Canteen.dto.OrderDto;
 import com.karakat.spring.Canteen.dto.UserDto;
 import com.karakat.spring.Canteen.exception.ResourceNotFoundException;
 import com.karakat.spring.Canteen.mapper.UserMapper;
+import com.karakat.spring.Canteen.model.Notification;
 import com.karakat.spring.Canteen.model.Orders;
 import com.karakat.spring.Canteen.model.User;
+import com.karakat.spring.Canteen.repository.NotificationRepository;
 import com.karakat.spring.Canteen.repository.OrderRepository;
 import com.karakat.spring.Canteen.repository.UserRepository;
+import com.karakat.spring.Canteen.service.NotificationService;
 import com.karakat.spring.Canteen.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,18 +25,22 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final OrderRepository orderRepository;
+    private final NotificationRepository notificationRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<UserDto> findAll() {
         List<User> users = userRepository.findAll();
         return userMapper.toDto(users);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserDto getUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User not found"));
         return userMapper.toDto(user);
@@ -72,7 +80,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addNotificationToUser(NotificationDto notificationDto) {
+    public void addNotificationToUser(Long id,List<Long> notificationDtoIds) {
+        var user = userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User with specific id not found"));
+        List<Notification>  notificationDtos = notificationRepository.findAllById(notificationDtoIds);
+        if(notificationDtos.size()!=notificationDtoIds.size()){
+            throw new IllegalArgumentException("Could not find all specified tags");
+
+        }
+        if(user.getNotificationList().stream().anyMatch(notif -> notificationDtos.contains(notif.getId()))){
+            throw new IllegalArgumentException("Tag already added");
+
+        }
+
+        user.setNotificationList(notificationDtos);
+        userRepository.save(user);
 
     }
 }

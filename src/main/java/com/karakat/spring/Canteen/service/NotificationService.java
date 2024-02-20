@@ -7,6 +7,5 @@ public interface NotificationService {
     NotificationDto createNotification(NotificationDto notificationDto);
     void deleteNotification(Long id);
 
-    NotificationDto addUserToNotification(Long id, UserDto userDto);
 
 }

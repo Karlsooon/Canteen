@@ -10,10 +10,12 @@ import com.karakat.spring.Canteen.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class NotificationServiceImpl implements NotificationService {
     private final NotificationRepository notificationRepository;
     private final NotificationMapper notificationMapper;
@@ -31,10 +33,5 @@ public class NotificationServiceImpl implements NotificationService {
 
     }
 
-    @Override
-    public NotificationDto addUserToNotification(Long id, UserDto userDto) {
-        Notification notification = notificationRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("notification id not found"));
 
-        return null;
-    }
 }
