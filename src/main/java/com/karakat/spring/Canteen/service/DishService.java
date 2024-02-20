@@ -51,5 +51,19 @@ public class DishService {
         return dishDto;
     }
 
+    @Transactional
+    public DishDto updateDish(DishDto dishDto){
+        Long id = dishDto.getId();
+        Dish dish = dishRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Dish Not found"));
+        dish.setName(dishDto.getName());
+        dish.setCategory(dishDto.getCategory());
+        dish.setPrice(dishDto.getPrice());
+        dish.setCategory(dishDto.getCategory());
+
+        Dish updated = dishRepository.save(dish);
+
+        return dishMapper.toDto(updated);
+
+    }
 
 }

@@ -33,3 +33,15 @@ jwt:
     converter:
       resource-id: CanteenWeb
       principle-attribute: preferred_username
+
+keycloak:
+  realm: CanteenWeb
+  auth-server-url: http://localhost:18080/auth/
+  # use external in production
+  ssl-required: none
+  # name of the client
+  resource: canteenWeb
+  credentials:
+    secret: oTNRqIKBsTCYf5eYQoOc7lgSQBokwJJm
+  use-resource-role-mappings: true
+  bearer-only: true
