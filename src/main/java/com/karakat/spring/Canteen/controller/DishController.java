@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,10 +17,10 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/dish")
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class DishController {
 
     private final DishService dishService;
-
     @GetMapping("/all")
     public List<DishDto> findAll(){
         return dishService.findAll();
@@ -31,16 +32,21 @@ public class DishController {
 
     }
 
+    @PreAuthorize("hasRole('admin')")
     @PostMapping(value = "/create", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<DishDto> createDish(@ModelAttribute DishDto dishDto, @RequestParam("image") MultipartFile imageFile) throws IOException {
         return ResponseEntity.status(HttpStatus.CREATED).body(dishService.save(dishDto, imageFile));
     }
     @PostMapping(value = "/update")
+    @PreAuthorize("hasRole('admin')")
     public ResponseEntity<DishDto> updateDish(@ModelAttribute DishDto dishDto){
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(dishService.updateDish(dishDto));
     }
 
     @PostMapping("/delete/{id}")
+    @PreAuthorize("hasRole('admin')")
+
+
     public ResponseEntity<String> deleteDish(@ModelAttribute DishDto dishDto, @PathVariable Long id){
         return dishService.deleteDish(dishDto,id);
     }
