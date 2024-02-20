@@ -1,7 +1,9 @@
 package com.karakat.spring.Canteen.service.impl;
 
 import com.karakat.spring.Canteen.dto.DishDto;
+//import com.karakat.spring.Canteen.dto.OrderDto;
 import com.karakat.spring.Canteen.dto.OrderDto;
+import com.karakat.spring.Canteen.dto.OrderDtoRequest;
 import com.karakat.spring.Canteen.exception.ResourceNotFoundException;
 import com.karakat.spring.Canteen.mapper.OrderMapper;
 import com.karakat.spring.Canteen.model.Dish;
@@ -39,12 +41,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDto createOrder(OrderDto orderDto) {
-        Orders order = orderMapper.toEntity(orderDto);
-        Orders saveOrder = orderRepository.save(order);
-        orderDto.setId(saveOrder.getId());
-        return orderDto;
+    public OrderDto createOrder(OrderDtoRequest orderDtoRequest) {
+        try {
+            Orders order = orderMapper.toEntity(orderDtoRequest);
+            Orders savedOrder = orderRepository.save(order);
+            return orderMapper.toDto(savedOrder);
+        } catch (Exception e) {
+            // Handle any exceptions (e.g., database errors) and log or return an appropriate response
+            throw new RuntimeException("Failed to create order", e);
+        }
     }
+
+
 
     @Override
     public void deleteOrder(Long id) {

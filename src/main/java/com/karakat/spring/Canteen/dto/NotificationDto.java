@@ -14,5 +14,4 @@ public class NotificationDto {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User recipient;
     private String message;
-    private Boolean readStatus;
 }

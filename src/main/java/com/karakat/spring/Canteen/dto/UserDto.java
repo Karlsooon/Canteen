@@ -22,6 +22,6 @@ public class UserDto {
     private List<Orders> ordersList;
     @OneToMany(mappedBy = "recipient",cascade = CascadeType.ALL)
     private List<Notification> notificationList;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<OrderHistory> orderHistoryList;
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    private List<OrderHistory> orderHistoryList;
 }
