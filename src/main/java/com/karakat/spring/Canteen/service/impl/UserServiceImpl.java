@@ -5,6 +5,7 @@ import com.karakat.spring.Canteen.dto.OrderDto;
 import com.karakat.spring.Canteen.dto.UserDto;
 import com.karakat.spring.Canteen.exception.ResourceNotFoundException;
 import com.karakat.spring.Canteen.mapper.UserMapper;
+import com.karakat.spring.Canteen.model.Orders;
 import com.karakat.spring.Canteen.model.User;
 import com.karakat.spring.Canteen.repository.OrderRepository;
 import com.karakat.spring.Canteen.repository.UserRepository;
@@ -50,14 +51,25 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
 
     }
-//
-//    @Override
-//    public void addOrderToUser(Long id,List<OrderDto> orderDtoIds) {
-//        User user = userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("User not found"));
-//        List<OrderDto> tags = orderRepository.findAllById(orderDtoIds);
-//
-//
-//    }
+
+
+
+    @Override
+    public void addOrderToUser(Long id,List<Long> orderDtoIds) {
+        User user = userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("User not found"));
+        List<Orders> tags = orderRepository.findAllById(orderDtoIds);
+        if(tags.size()!=orderDtoIds.size()){
+            throw  new IllegalArgumentException("Could not find all specified orders");
+        }
+        if(user.getOrdersList().stream().anyMatch(tag->orderDtoIds.contains(tag.getId()))){
+            throw new IllegalArgumentException("Tag already added");
+        }
+
+        user.setOrdersList(tags);
+        userRepository.save(user);
+
+
+    }
 
     @Override
     public void addNotificationToUser(NotificationDto notificationDto) {

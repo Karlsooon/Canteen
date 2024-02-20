@@ -16,7 +16,8 @@ public interface UserService {
 
     void deleteUser(Long id);
 
-    void addOrderToUser(OrderDto orderDto);
+
+    void addOrderToUser(Long id,List<Long> orderDtoIds);
 
     void addNotificationToUser(NotificationDto notificationDto);
 
