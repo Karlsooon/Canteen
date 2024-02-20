@@ -6,8 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,4 +23,28 @@ public class OrderController {
     public List<OrderDto> allOrders() {
         return orderServiceImpl.allOrders();
     }
+
+    @GetMapping("/{id}")
+    @Transactional(readOnly = true)
+    public OrderDto getOrderById(@PathVariable Long id) {
+        return orderServiceImpl.getOrderById(id);
+    }
+
+    @PostMapping("/create")
+    public OrderDto createOrder(@RequestBody OrderDto orderDto) {
+        return orderServiceImpl.createOrder(orderDto);
+    }
+
+    @DeleteMapping("/{id}/delete")
+    public void deleteOrder(@PathVariable Long id) {
+        orderServiceImpl.deleteOrder(id);
+
+    }
+
+    @PostMapping("/{id}/addDish")
+    public OrderDto addDish(@PathVariable Long id,@RequestParam List<Long> dishDtoIds) {
+        return orderServiceImpl.addDish(id,dishDtoIds);
+    }
+
+
 }
