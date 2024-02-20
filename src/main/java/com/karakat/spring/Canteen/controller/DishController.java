@@ -38,5 +38,15 @@ public class DishController {
     public ResponseEntity<DishDto> createDish(@ModelAttribute DishDto dishDto, @RequestParam("image") MultipartFile imageFile) throws IOException {
         return ResponseEntity.status(HttpStatus.CREATED).body(dishService.save(dishDto, imageFile));
     }
+    @PostMapping(value = "/update")
+    public ResponseEntity<DishDto> updateDish(@ModelAttribute DishDto dishDto){
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dishService.updateDish(dishDto));
+    }
+
+    @PostMapping("/delete/{id}")
+    public ResponseEntity<String> deleteDish(@ModelAttribute DishDto dishDto, @PathVariable Long id){
+        return dishService.deleteDish(dishDto,id);
+    }
+
 
 }
