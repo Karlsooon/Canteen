@@ -1,6 +1,8 @@
 package com.karakat.spring.Canteen.controller;
 
+import com.karakat.spring.Canteen.dto.AddOrderToUserDto;
 import com.karakat.spring.Canteen.dto.UserDto;
+import com.karakat.spring.Canteen.model.AppUser;
 import com.karakat.spring.Canteen.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,7 +17,7 @@ import java.util.List;
 public class UserController {
     private final UserServiceImpl userServiceImpl;
     @GetMapping("/all")
-    public ResponseEntity<List<UserDto>> getAllUser(){
+    public ResponseEntity<List<AppUser>> getAllUser(){
         return ResponseEntity.ok(userServiceImpl.findAll());
     }
 
@@ -36,12 +38,12 @@ public class UserController {
     }
 
     @PostMapping("/{id}/addOrder")
-    public void addOrderToUser(@PathVariable Long id, @RequestParam List<Long> orderDtoIds){
-        userServiceImpl.addOrderToUser(id, orderDtoIds);
+    public AddOrderToUserDto addOrderToUser(@PathVariable Long id, @RequestParam List<Long> orderDtoIds){
+        return userServiceImpl.addOrderToUser(id, orderDtoIds);
     }
 
     @PostMapping("/{id}/addNotification")
-    public void addNotificationToUser(@PathVariable Long id,@RequestParam List<Long> notificationDtoIds) {
-        userServiceImpl.addNotificationToUser(id, notificationDtoIds);
+    public void addNotificationToUser(@PathVariable Long id, @RequestParam List<Long> notificationDtoIds) {
+         userServiceImpl.addNotificationToUser(id, notificationDtoIds);
     }
 }
