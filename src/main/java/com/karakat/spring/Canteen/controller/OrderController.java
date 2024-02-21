@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/order")
 @Slf4j
@@ -46,10 +46,10 @@ public class OrderController {
 
     }
 
-    @PostMapping("/{id}/addDish")
-    public OrderDto addDish(@PathVariable Long id,@RequestParam List<Long> dishDtoIds) {
-        return orderServiceImpl.addDish(id,dishDtoIds);
-    }
+//    @PostMapping("/{id}/addDish")
+//    public OrderDto addDish(@PathVariable Long id,@RequestParam List<Long> dishDtoIds) {
+//        return orderServiceImpl.addDish(id,dishDtoIds);
+//    }
 
 
 }

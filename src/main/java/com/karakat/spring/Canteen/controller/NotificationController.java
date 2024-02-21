@@ -4,6 +4,7 @@ import com.karakat.spring.Canteen.dto.NotificationDto;
 import com.karakat.spring.Canteen.service.impl.NotificationServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +17,9 @@ public class NotificationController {
     private final NotificationServiceImpl notificationServiceImpl;
 
     @PostMapping("/create")
-    public NotificationDto createNotification(@RequestParam NotificationDto notificationDto) {
-        return notificationServiceImpl.createNotification(notificationDto);
+    public ResponseEntity<NotificationDto> createNotification(@RequestBody NotificationDto notificationDto) {
+        NotificationDto notificationDto1 = notificationServiceImpl.createNotification(notificationDto);
+        return ResponseEntity.ok(notificationDto1);
     }
 
     @DeleteMapping("/{id}/delete")

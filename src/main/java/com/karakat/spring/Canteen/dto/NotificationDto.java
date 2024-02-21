@@ -10,8 +10,6 @@ import lombok.Data;
 public class NotificationDto {
     @Id
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private AppUser recipient;
+
     private String message;
 }

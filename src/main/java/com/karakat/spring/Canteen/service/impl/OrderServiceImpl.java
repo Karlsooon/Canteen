@@ -56,7 +56,6 @@ public class OrderServiceImpl implements OrderService {
             Orders savedOrder = orderRepository.save(order);
             return orderMapper.toDto(savedOrder);
         } catch (Exception e) {
-            // Handle any exceptions (e.g., database errors) and log or return an appropriate response
             throw new RuntimeException("Failed to create order", e);
         }
     }
