@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto createUser(UserDto userDto) {
-        var user = userMapper.toEntity(userDto);
+        AppUser user = userMapper.toEntity(userDto);
         AppUser appUserSave = userRepository.save(user);
         userDto.setId(appUserSave.getId());
         return userDto;
@@ -78,13 +78,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addNotificationToUser(Long id,List<Long> notificationDtoIds) {
-        var user = userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("AppUser with specific id not found"));
+        AppUser user = userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("AppUser with specific id not found"));
         List<Notification>  notificationDtos = notificationRepository.findAllById(notificationDtoIds);
         if(notificationDtos.size()!=notificationDtoIds.size()){
             throw new IllegalArgumentException("Could not find all specified tags");
 
         }
-        if(user.getNotificationList().stream().anyMatch(notif -> notificationDtos.contains(notif.getId()))){
+        if(user.getNotificationList().stream().anyMatch(notif -> {
+            return notificationDtos.contains(notif.getId());
+        })){
             throw new IllegalArgumentException("Tag already added");
 
         }
