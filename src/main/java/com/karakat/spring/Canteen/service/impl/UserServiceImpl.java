@@ -1,8 +1,10 @@
 package com.karakat.spring.Canteen.service.impl;
 
 //import com.karakat.spring.Canteen.dto.OrderDto;
+import com.karakat.spring.Canteen.dto.AddOrderToUserDto;
 import com.karakat.spring.Canteen.dto.UserDto;
 import com.karakat.spring.Canteen.exception.ResourceNotFoundException;
+import com.karakat.spring.Canteen.mapper.AddOrderToUserDtoMapper;
 import com.karakat.spring.Canteen.mapper.UserMapper;
 import com.karakat.spring.Canteen.model.Notification;
 import com.karakat.spring.Canteen.model.Orders;
@@ -28,12 +30,13 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final OrderRepository orderRepository;
     private final NotificationRepository notificationRepository;
+    private final AddOrderToUserDtoMapper addOrderToUserDtoMapper;
 
     @Override
     @Transactional(readOnly = true)
-    public List<UserDto> findAll() {
+    public List<AppUser> findAll() {
         List<AppUser> appUsers = userRepository.findAll();
-        return userMapper.toDto(appUsers);
+        return appUsers;
     }
 
     @Override
@@ -60,7 +63,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void addOrderToUser(Long id,List<Long> orderDtoIds) {
+    public AddOrderToUserDto addOrderToUser(Long id,List<Long> orderDtoIds) {
         AppUser appUser = userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("AppUser not found"));
         List<Orders> tags = orderRepository.findAllById(orderDtoIds);
         if(tags.size()!=orderDtoIds.size()){
@@ -70,28 +73,27 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Tag already added");
         }
 
-        appUser.setOrdersList(tags);
+        appUser.getOrdersList().addAll(tags);
         userRepository.save(appUser);
+        return addOrderToUserDtoMapper.toDto(appUser);
 
 
     }
 
     @Override
-    public void addNotificationToUser(Long id,List<Long> notificationDtoIds) {
+    public void addNotificationToUser(Long id, List<Long> notificationDtoIds) {
         AppUser user = userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("AppUser with specific id not found"));
         List<Notification>  notificationDtos = notificationRepository.findAllById(notificationDtoIds);
         if(notificationDtos.size()!=notificationDtoIds.size()){
             throw new IllegalArgumentException("Could not find all specified tags");
 
         }
-        if(user.getNotificationList().stream().anyMatch(notif -> {
-            return notificationDtos.contains(notif.getId());
-        })){
+        if(user.getNotificationList().stream().anyMatch(notif -> notificationDtos.contains(notif.getId()))){
             throw new IllegalArgumentException("Tag already added");
 
         }
 
-        user.setNotificationList(notificationDtos);
+        user.getNotificationList().addAll(notificationDtos);
         userRepository.save(user);
 
     }
