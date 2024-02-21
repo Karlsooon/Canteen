@@ -13,6 +13,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: true
+        format_sql: true
     generate-ddl: true
     defer-datasource-initialization: true
   servlet:
@@ -34,3 +36,12 @@ jwt:
     converter:
       resource-id: CanteenWeb
       principle-attribute: preferred_username
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+        type:
+          descriptor:
+            sql: trace

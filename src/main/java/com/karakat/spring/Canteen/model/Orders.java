@@ -15,15 +15,19 @@ import java.util.List;
 public class Orders {
     @Id
     private Long id;
+
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "id")
-    private User user;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private AppUser appUser;
+
     @ManyToMany
     @JoinTable(name = "order_dish", joinColumns=@JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "dish_id"))
     private List<Dish> dishList;
-    private String status;
+
     private Timestamp localDateTime;
+
     @OneToOne
     @JoinColumn(name = "payment_id", referencedColumnName = "id")
     private Payment payment;
 }
+

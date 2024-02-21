@@ -15,7 +15,7 @@ public class OrderHistory {
     @Id
     private Long id;
     @ManyToOne
-    private User user;
+    private AppUser appUser;
     @ManyToMany
     @JoinTable(name = "order_history_dish", joinColumns = @JoinColumn(name = "order_history_id"), inverseJoinColumns = @JoinColumn(name = "dish_id"))
     private List<Dish> dishList;
