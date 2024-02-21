@@ -2,6 +2,7 @@ package com.karakat.spring.Canteen.controller;
 
 import com.karakat.spring.Canteen.dto.DishDto;
 import com.karakat.spring.Canteen.service.DishService;
+import com.karakat.spring.Canteen.service.impl.DishServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,33 +18,33 @@ import java.util.List;
 @RequestMapping("/api/dish")
 public class DishController {
 
-    private final DishService dishService;
+    private final DishServiceImpl dishServiceImpl;
     @GetMapping("/all")
     public List<DishDto> findAll(){
-        return dishService.findAll();
+        return dishServiceImpl.findAll();
     }
 
     @GetMapping("/{id}")
     public DishDto findById(@PathVariable Long id){
-       return dishService.findById(id);
+       return dishServiceImpl.findById(id);
 
     }
 
 //    @PreAuthorize("hasRole('admin')")
     @PostMapping(value = "/create", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<DishDto> createDish(@ModelAttribute DishDto dishDto, @RequestParam("image") MultipartFile imageFile)  {
-        return ResponseEntity.status(HttpStatus.CREATED).body(dishService.save(dishDto, imageFile));
+        return ResponseEntity.status(HttpStatus.CREATED).body(dishServiceImpl.save(dishDto, imageFile));
     }
     @PostMapping(value = "/update")
 //    @PreAuthorize("hasRole('admin')")
     public ResponseEntity<DishDto> updateDish(@ModelAttribute DishDto dishDto){
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dishService.updateDish(dishDto));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dishServiceImpl.updateDish(dishDto));
     }
 
     @PostMapping("/delete/{id}")
 //    @PreAuthorize("hasRole('admin')")
     public ResponseEntity<String> deleteDish(@ModelAttribute DishDto dishDto, @PathVariable Long id){
-        return dishService.deleteDish(dishDto,id);
+        return dishServiceImpl.deleteDish(dishDto,id);
     }
 
 

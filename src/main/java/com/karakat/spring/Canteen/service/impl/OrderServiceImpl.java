@@ -1,9 +1,8 @@
 package com.karakat.spring.Canteen.service.impl;
 
-import com.karakat.spring.Canteen.dto.DishDto;
 //import com.karakat.spring.Canteen.dto.OrderDto;
+import com.karakat.spring.Canteen.dto.DishDto;
 import com.karakat.spring.Canteen.dto.OrderDto;
-import com.karakat.spring.Canteen.dto.OrderDtoRequest;
 import com.karakat.spring.Canteen.exception.ResourceNotFoundException;
 import com.karakat.spring.Canteen.mapper.OrderMapper;
 import com.karakat.spring.Canteen.model.Dish;
@@ -11,6 +10,7 @@ import com.karakat.spring.Canteen.model.Orders;
 import com.karakat.spring.Canteen.repository.DishRepository;
 import com.karakat.spring.Canteen.repository.OrderRepository;
 import com.karakat.spring.Canteen.service.OrderService;
+import jakarta.persistence.criteria.Order;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,11 +26,15 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
     private final DishRepository dishRepository;
-    @Override
     @Transactional(readOnly = true)
-    public List<OrderDto> allOrders() {
-        List<Orders> orders = orderRepository.findAll();
-        return orderMapper.toDto(orders);
+    public List<OrderDto> allOrders(){
+        List<Orders> ordersList = orderRepository.findAll();
+        if(ordersList.isEmpty()){
+            throw new ResourceNotFoundException("Products not found");
+        }
+
+        return orderMapper.toDto(ordersList);
+
     }
 
     @Override
@@ -41,9 +45,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDto createOrder(OrderDtoRequest orderDtoRequest) {
+    public OrderDto createOrder(OrderDto orderDto, List<Long> dishIds) {
+        List<Dish> dishList = dishRepository.findAllById(dishIds);
+        if(dishList.size()!=dishIds.size()){
+            throw new IllegalArgumentException("dish id not found");
+        }
         try {
-            Orders order = orderMapper.toEntity(orderDtoRequest);
+            Orders order = orderMapper.toEntity(orderDto);
+            order.setDishList(dishList);
             Orders savedOrder = orderRepository.save(order);
             return orderMapper.toDto(savedOrder);
         } catch (Exception e) {
