@@ -18,7 +18,7 @@ public class AppUser {
     private String surname;
     private String email;
     private String password;
-    @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Orders> ordersList;
     @OneToMany(mappedBy = "recipient",cascade = CascadeType.ALL)
     private List<Notification> notificationList;

@@ -18,6 +18,8 @@ public class UserDto {
     private String surname;
     private String email;
     private String password;
+    private List<OrderDto> orderIds;
+
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 //    private List<Orders> orderIds;
 //    @OneToMany(mappedBy = "recipient",cascade = CascadeType.ALL)

@@ -1,10 +1,8 @@
 package com.karakat.spring.Canteen.service.impl;
 
 //import com.karakat.spring.Canteen.dto.OrderDto;
-import com.karakat.spring.Canteen.dto.AddOrderToUserDto;
 import com.karakat.spring.Canteen.dto.UserDto;
 import com.karakat.spring.Canteen.exception.ResourceNotFoundException;
-import com.karakat.spring.Canteen.mapper.AddOrderToUserDtoMapper;
 import com.karakat.spring.Canteen.mapper.UserMapper;
 import com.karakat.spring.Canteen.model.Notification;
 import com.karakat.spring.Canteen.model.Orders;
@@ -30,17 +28,23 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final OrderRepository orderRepository;
     private final NotificationRepository notificationRepository;
-    private final AddOrderToUserDtoMapper addOrderToUserDtoMapper;
 
     @Override
-    @Transactional(readOnly = true)
     public List<AppUser> findAll() {
-        List<AppUser> appUsers = userRepository.findAll();
-        return appUsers;
+        List<AppUser> users = userRepository.findAll();
+        for (AppUser user : users) {
+            log.info("User: {}", user); // Log the fetched user
+            for (Orders order : user.getOrdersList()) {
+                log.info("Order for user {}: {}", user.getId(), order); // Log associated orders
+            }
+            if(user.getOrdersList().isEmpty()){
+                log.info("orderlist empty");
+            }
+        }
+        return users;
     }
 
     @Override
-    @Transactional(readOnly = true)
     public UserDto getUserById(Long id) {
         AppUser appUser = userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("AppUser not found"));
         return userMapper.toDto(appUser);
@@ -63,9 +67,11 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public AddOrderToUserDto addOrderToUser(Long id,List<Long> orderDtoIds) {
+    public void addOrderToUser(Long id,List<Long> orderDtoIds) {
         AppUser appUser = userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("AppUser not found"));
         List<Orders> tags = orderRepository.findAllById(orderDtoIds);
+        log.info("Size of orderList before adding orders: {}", appUser.getOrdersList().size());
+
         if(tags.size()!=orderDtoIds.size()){
             throw  new IllegalArgumentException("Could not find all specified orders");
         }
@@ -75,7 +81,8 @@ public class UserServiceImpl implements UserService {
 
         appUser.getOrdersList().addAll(tags);
         userRepository.save(appUser);
-        return addOrderToUserDtoMapper.toDto(appUser);
+        log.info("Size of orderList after adding orders: {}", appUser.getOrdersList().size());
+
 
 
     }
