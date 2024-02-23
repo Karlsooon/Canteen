@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Notification")
+@Table(name = "Notification", schema = "schema_canteen")
 public class Notification {
     @Id
     @Column(name = "id")
