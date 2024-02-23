@@ -18,33 +18,33 @@ import java.util.List;
 @RequestMapping("/api/dish")
 public class DishController {
 
-    private final DishServiceImpl dishServiceImpl;
+    private final DishServiceImpl dishService;
     @GetMapping("/all")
     public List<DishDto> findAll(){
-        return dishServiceImpl.findAll();
+        return dishService.findAll();
     }
 
     @GetMapping("/{id}")
     public DishDto findById(@PathVariable Long id){
-       return dishServiceImpl.findById(id);
+       return dishService.findById(id);
 
     }
 
 //    @PreAuthorize("hasRole('admin')")
     @PostMapping(value = "/create", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<DishDto> createDish(@ModelAttribute DishDto dishDto, @RequestParam("image") MultipartFile imageFile)  {
-        return ResponseEntity.status(HttpStatus.CREATED).body(dishServiceImpl.save(dishDto, imageFile));
+        return ResponseEntity.status(HttpStatus.CREATED).body(dishService.save(dishDto, imageFile));
     }
     @PostMapping(value = "/update")
 //    @PreAuthorize("hasRole('admin')")
     public ResponseEntity<DishDto> updateDish(@ModelAttribute DishDto dishDto){
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dishServiceImpl.updateDish(dishDto));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dishService.updateDish(dishDto));
     }
 
     @PostMapping("/delete/{id}")
 //    @PreAuthorize("hasRole('admin')")
     public ResponseEntity<String> deleteDish(@ModelAttribute DishDto dishDto, @PathVariable Long id){
-        return dishServiceImpl.deleteDish(dishDto,id);
+        return dishService.deleteDish(dishDto,id);
     }
 
 

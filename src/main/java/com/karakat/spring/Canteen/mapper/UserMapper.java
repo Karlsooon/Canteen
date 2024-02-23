@@ -24,8 +24,10 @@ public interface UserMapper extends BaseMapper<AppUser, UserDto>{
         return ordersList.stream().map(Orders::getId).collect(Collectors.toList());
     }
 
-    default List<Long> notificationListToNotificationIds(List<Notification> notificationList){
-        return notificationList.stream().map(Notification::getId).collect(Collectors.toList());
+    default List<Long> mapNotificationListToIds(List<Notification> NotificationList) {
+        return NotificationList.stream()
+                .map(Notification::getId)
+                .collect(Collectors.toList());
     }
 
 }

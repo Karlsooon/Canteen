@@ -7,7 +7,7 @@ import com.karakat.spring.Canteen.model.AppUser;
         import java.util.List;
 
 public interface UserService {
-    List<UserDto> findAll();
+    List<UserDto> allUsers();
     UserDto getUserById(Long id);
 
     UserDto createUser(UserDto userDto);
@@ -15,9 +15,9 @@ public interface UserService {
     void deleteUser(Long id);
 
 
-    void addOrderToUser(Long id,List<Long> orderDtoIds);
+    void addOrderToUser(Long id,List<Long> orderIds);
 
-    void addNotificationToUser(Long id, List<Long> notificationDto);
+    void addNotificationToUser(Long id, List<Long> notificationIds);
 
     //order history automatically when dishList ordered
 
