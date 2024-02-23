@@ -24,6 +24,8 @@ import java.util.stream.Collectors;
 public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
+
+    //fix some empty lists
     @GetMapping("/all")
     public ResponseEntity<List<UserDto>> getAllUsers() {
         log.info("Entering getAllUsers method");
