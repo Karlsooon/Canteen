@@ -8,8 +8,6 @@ import lombok.Data;
 
 @Data
 public class NotificationDto {
-    @Id
     private Long id;
-
     private String message;
 }

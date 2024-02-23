@@ -12,4 +12,5 @@ public class DishDto {
     private Double price;
     private String description;
     private String category;
+    private String image;
 }

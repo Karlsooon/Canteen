@@ -49,9 +49,8 @@ public class DishServiceImpl implements DishService {
         var entity = dishMapper.toEntity(dishDto);
         entity.setImage(imageUrl);
         Dish savedDish = dishRepository.save(entity);
-        dishDto.setId(savedDish.getId());
 
-        return dishDto;
+        return dishMapper.toDto(savedDish);
     }
     public DishDto updateDish(DishDto dishDto) {
         Long id = dishDto.getId();
