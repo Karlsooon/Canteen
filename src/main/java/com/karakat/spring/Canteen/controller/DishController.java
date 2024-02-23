@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("/api/dish")
 public class DishController {
 
-    private final DishServiceImpl dishService;
+    private final DishService dishService;
     @GetMapping("/all")
     public List<DishDto> findAll(){
         return dishService.findAll();

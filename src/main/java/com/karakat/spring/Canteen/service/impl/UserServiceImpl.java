@@ -47,8 +47,7 @@ public class UserServiceImpl implements UserService {
     public UserDto createUser(UserDto userDto) {
         AppUser user = userMapper.toEntity(userDto);
         AppUser appUserSave = userRepository.save(user);
-        userDto.setId(appUserSave.getId());
-        return userDto;
+        return userMapper.toDto(appUserSave);
     }
 
     @Override

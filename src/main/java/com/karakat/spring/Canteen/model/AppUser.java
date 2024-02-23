@@ -30,6 +30,7 @@ public class AppUser {
     @NonNull
     @Column(name = "password")
     private String password;
+
     @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Orders> ordersList;
     @OneToMany(mappedBy = "recipient",cascade = CascadeType.ALL)
