@@ -27,7 +27,7 @@ public class UserController {
     public ResponseEntity<List<UserDto>> getAllUsers() {
         log.info("Entering getAllUsers method");
 
-        var users = userService.findAll();
+        var users = userService.allUsers();
         log.info("Exiting getAllUsers method with result: {}", users);
 
 
@@ -53,16 +53,20 @@ public class UserController {
     }
 
     @PostMapping("/{id}/addOrder")
-    public ResponseEntity<?> addOrderToUser(@PathVariable Long id, @RequestParam List<Long> orderDtoIds){
-        if(orderDtoIds.isEmpty()){
+    public ResponseEntity<?> addOrderToUser(@PathVariable Long id, @RequestParam List<Long> orderIds){
+        if(orderIds.isEmpty()){
             throw  new IllegalArgumentException("List of order Id's empty ");
         }
-         userService.addOrderToUser(id, orderDtoIds);
+         userService.addOrderToUser(id, orderIds);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/{id}/addNotification")
-    public void addNotificationToUser(@PathVariable Long id, @RequestParam List<Long> notificationDtoIds) {
-         userService.addNotificationToUser(id, notificationDtoIds);
+    public void addNotificationToUser(@PathVariable Long id, @RequestParam List<Long> notificationIds) {
+        if(notificationIds.isEmpty()){
+            throw new IllegalArgumentException("List of notification Id's empty ");
+        }
+        userService.addNotificationToUser(id, notificationIds);
     }
+
 }

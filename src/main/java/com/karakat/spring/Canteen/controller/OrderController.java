@@ -18,23 +18,23 @@ import java.util.List;
 @Slf4j
 @Transactional
 public class OrderController {
-    private final OrderServiceImpl orderServiceImpl;
+    private final OrderServiceImpl orderService;
 
     @Transactional(readOnly = true)
     @GetMapping("/all")
     public List<OrderDto> allOrders() {
-        return orderServiceImpl.allOrders();
+        return orderService.allOrders();
     }
 
     @GetMapping("/{id}")
     @Transactional(readOnly = true)
     public OrderDto getOrderById(@PathVariable Long id) {
-        return orderServiceImpl.getOrderById(id);
+        return orderService.getOrderById(id);
     }
 
     @PostMapping("/create")
     public ResponseEntity<OrderDto> createOrder(@RequestBody OrderDto orderDto, @RequestParam List<Long> dishIds) {
-        OrderDto createdOrderDto = orderServiceImpl.createOrder(orderDto, dishIds);
+        OrderDto createdOrderDto = orderService.createOrder(orderDto, dishIds);
         return ResponseEntity.ok(createdOrderDto);
     }
 
@@ -42,7 +42,7 @@ public class OrderController {
 
     @DeleteMapping("/{id}/delete")
     public void deleteOrder(@PathVariable Long id) {
-        orderServiceImpl.deleteOrder(id);
+        orderService.deleteOrder(id);
 
     }
 

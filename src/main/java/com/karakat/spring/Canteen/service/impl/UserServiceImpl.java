@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
     private final NotificationRepository notificationRepository;
 
     @Override
-    public List<UserDto> findAll() {
+    public List<UserDto> allUsers() {
         List<AppUser> users = userRepository.findAll();
 
         return userMapper.toDto(users);
@@ -69,9 +70,15 @@ public class UserServiceImpl implements UserService {
         }
 
         // Add the new orders to the existing list
-        appUser.getOrdersList().addAll(orders);
+        List<Orders> ordersList = new ArrayList<>(appUser.getOrdersList());
+        ordersList.addAll(orders);
+        appUser.setOrdersList(ordersList);
 
         userRepository.save(appUser);
+        ordersList.forEach(i -> {
+            i.setAppUser(appUser);
+            orderRepository.save(i);
+        });
         log.info("Size of orderList after adding orders: {}", appUser.getOrdersList().size());
     }
 
@@ -79,19 +86,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addNotificationToUser(Long id, List<Long> notificationDtoIds) {
-        AppUser user = userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("AppUser with specific id not found"));
+        AppUser user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("AppUser with specific id not found"));
         List<Notification>  notificationDtos = notificationRepository.findAllById(notificationDtoIds);
         if(notificationDtos.size()!=notificationDtoIds.size()){
             throw new IllegalArgumentException("Could not find all specified tags");
-
         }
         if(user.getNotificationList().stream().anyMatch(notif -> notificationDtos.contains(notif.getId()))){
             throw new IllegalArgumentException("Tag already added");
-
         }
-
         user.getNotificationList().addAll(notificationDtos);
         userRepository.save(user);
 
+        List<Notification> notificationList = user.getNotificationList();
+
+        notificationList.forEach(i -> {
+            i.setRecipient(user);
+            notificationRepository.save(i);
+                }
+
+        );
+
     }
+
 }

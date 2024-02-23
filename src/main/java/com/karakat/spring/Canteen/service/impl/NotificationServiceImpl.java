@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -19,6 +21,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class NotificationServiceImpl implements NotificationService {
     private final NotificationRepository notificationRepository;
     private final NotificationMapper notificationMapper;
+
+    @Override
+    public List<NotificationDto> findAllNotifications() {
+        List<Notification> notificationList = notificationRepository.findAll();
+        return notificationMapper.toDto(notificationList);
+    }
+
     @Override
     public NotificationDto createNotification(NotificationDto notificationDto) {
         Notification notification = notificationMapper.toEntity(notificationDto);
