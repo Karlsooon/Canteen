@@ -2,8 +2,10 @@ package com.karakat.spring.Canteen.service.impl;
 
 //import com.karakat.spring.Canteen.dto.OrderDto;
 import com.karakat.spring.Canteen.dto.UserDto;
+import com.karakat.spring.Canteen.dto.UserRequest;
 import com.karakat.spring.Canteen.exception.ResourceNotFoundException;
 import com.karakat.spring.Canteen.mapper.UserMapper;
+import com.karakat.spring.Canteen.mapper.UserRequestMapper;
 import com.karakat.spring.Canteen.model.Notification;
 import com.karakat.spring.Canteen.model.Orders;
 import com.karakat.spring.Canteen.model.AppUser;
@@ -29,6 +31,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final OrderRepository orderRepository;
     private final NotificationRepository notificationRepository;
+    private final UserRequestMapper userRequestMapper;
 
     @Override
     public List<UserDto> allUsers() {
@@ -44,10 +47,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto createUser(UserDto userDto) {
-        AppUser user = userMapper.toEntity(userDto);
+    public UserRequest createUser(UserRequest userRequest) {
+        AppUser user = userRequestMapper.toEntity(userRequest);
         AppUser appUserSave = userRepository.save(user);
-        return userMapper.toDto(appUserSave);
+        return userRequestMapper.toDto(appUserSave);
     }
 
     @Override

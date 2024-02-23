@@ -2,6 +2,7 @@ package com.karakat.spring.Canteen.controller;
 
 import com.karakat.spring.Canteen.dto.OrderDto;
 import com.karakat.spring.Canteen.dto.UserDto;
+import com.karakat.spring.Canteen.dto.UserRequest;
 import com.karakat.spring.Canteen.mapper.UserMapper;
 import com.karakat.spring.Canteen.model.AppUser;
 import com.karakat.spring.Canteen.model.Orders;
@@ -42,9 +43,9 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
-        UserDto userDto1 = userService.createUser(userDto);
-        return ResponseEntity.ok(userDto1);
+    public ResponseEntity<UserRequest> createUser(@RequestBody UserRequest userRequest){
+        UserRequest userRequestCreate = userService.createUser(userRequest);
+        return ResponseEntity.ok(userRequestCreate);
     }
 
     @DeleteMapping ("/{id}/delete")
