@@ -25,7 +25,7 @@ public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
 
-    //fix some empty lists
+    //fix some  empty lists
     @GetMapping("/all")
     public ResponseEntity<List<UserDto>> getAllUsers() {
         log.info("Entering getAllUsers method");
@@ -33,17 +33,12 @@ public class UserController {
         var users = userService.allUsers();
         log.info("Exiting getAllUsers method with result: {}", users);
 
-
         return ResponseEntity.ok(users);
     }
-
-
-
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> findById(@PathVariable Long id){
         return ResponseEntity.ok(userService.getUserById(id));
     }
-
     @PostMapping("/create")
     public ResponseEntity<UserRequest> createUser(@RequestBody UserRequest userRequest){
         UserRequest userRequestCreate = userService.createUser(userRequest);
@@ -63,7 +58,6 @@ public class UserController {
          userService.addOrderToUser(id, orderIds);
         return ResponseEntity.ok().build();
     }
-
     @PostMapping("/{id}/addNotification")
     public void addNotificationToUser(@PathVariable Long id, @RequestParam List<Long> notificationIds) {
         if(notificationIds.isEmpty()){
@@ -71,5 +65,4 @@ public class UserController {
         }
         userService.addNotificationToUser(id, notificationIds);
     }
-
 }
