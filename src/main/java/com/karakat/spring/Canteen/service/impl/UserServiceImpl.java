@@ -30,18 +30,10 @@ public class UserServiceImpl implements UserService {
     private final NotificationRepository notificationRepository;
 
     @Override
-    public List<AppUser> findAll() {
+    public List<UserDto> findAll() {
         List<AppUser> users = userRepository.findAll();
-        for (AppUser user : users) {
-            log.info("User: {}", user); // Log the fetched user
-            for (Orders order : user.getOrdersList()) {
-                log.info("Order for user {}: {}", user.getId(), order); // Log associated orders
-            }
-            if(user.getOrdersList().isEmpty()){
-                log.info("orderlist empty");
-            }
-        }
-        return users;
+
+        return userMapper.toDto(users);
     }
 
     @Override
@@ -67,25 +59,23 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void addOrderToUser(Long id,List<Long> orderDtoIds) {
-        AppUser appUser = userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("AppUser not found"));
-        List<Orders> tags = orderRepository.findAllById(orderDtoIds);
+    public void addOrderToUser(Long id, List<Long> orderIds) {
+        var appUser = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("AppUser not found"));
+        var orders = orderRepository.findAllById(orderIds);
         log.info("Size of orderList before adding orders: {}", appUser.getOrdersList().size());
 
-        if(tags.size()!=orderDtoIds.size()){
-            throw  new IllegalArgumentException("Could not find all specified orders");
-        }
-        if(appUser.getOrdersList().stream().anyMatch(tag->orderDtoIds.contains(tag.getId()))){
-            throw new IllegalArgumentException("Tag already added");
+        if (orders.size() != orderIds.size()) {
+            throw new IllegalArgumentException("Could not find all specified orders");
         }
 
-        appUser.getOrdersList().addAll(tags);
+        // Add the new orders to the existing list
+        appUser.getOrdersList().addAll(orders);
+
         userRepository.save(appUser);
         log.info("Size of orderList after adding orders: {}", appUser.getOrdersList().size());
-
-
-
     }
+
+
 
     @Override
     public void addNotificationToUser(Long id, List<Long> notificationDtoIds) {

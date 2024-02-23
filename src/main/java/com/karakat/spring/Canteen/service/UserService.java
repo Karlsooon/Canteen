@@ -7,7 +7,7 @@ import com.karakat.spring.Canteen.model.AppUser;
         import java.util.List;
 
 public interface UserService {
-    List<AppUser> findAll();
+    List<UserDto> findAll();
     UserDto getUserById(Long id);
 
     UserDto createUser(UserDto userDto);
