@@ -18,12 +18,8 @@ public class UserDto {
     private String surname;
     private String email;
     private String password;
-    private List<OrderDto> orderIds;
-
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private List<Orders> orderIds;
-//    @OneToMany(mappedBy = "recipient",cascade = CascadeType.ALL)
-//    private List<Notification> notificationList;
+    private List<Orders> orderIds;
+    private List<Long> notificationIds;
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 //    private List<OrderHistory> orderHistoryList;
 }

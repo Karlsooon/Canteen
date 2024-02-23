@@ -63,6 +63,9 @@ public class UserController {
 
     @PostMapping("/{id}/addNotification")
     public void addNotificationToUser(@PathVariable Long id, @RequestParam List<Long> notificationDtoIds) {
+        if(notificationDtoIds.isEmpty()){
+            throw  new IllegalArgumentException("List of notification Id's empty ");
+        }
          userService.addNotificationToUser(id, notificationDtoIds);
     }
 }
