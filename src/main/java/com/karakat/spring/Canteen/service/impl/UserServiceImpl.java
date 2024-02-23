@@ -10,7 +10,7 @@ import com.karakat.spring.Canteen.model.AppUser;
 import com.karakat.spring.Canteen.repository.NotificationRepository;
 import com.karakat.spring.Canteen.repository.OrderRepository;
 import com.karakat.spring.Canteen.repository.UserRepository;
-        import com.karakat.spring.Canteen.service.UserService;
+import com.karakat.spring.Canteen.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

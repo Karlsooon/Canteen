@@ -1,9 +1,6 @@
 package com.karakat.spring.Canteen.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,17 +11,24 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "Dish")
 public class Dish {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "price")
     private Double price;
+    @Column(name = "description")
     private String description;
     @Lob
     private String image;
+    @Column(name = "category")
     private String category;
+    @Column(name = "ordersList")
     @ManyToMany(mappedBy = "dishList")
     private List<Orders> ordersList;
-    @ManyToMany(mappedBy = "dishList")
-    private List<OrderHistory> orderHistoryList;
+
 }

@@ -1,8 +1,4 @@
 package com.karakat.spring.Canteen.dto;
-import com.karakat.spring.Canteen.model.Notification;
-import com.karakat.spring.Canteen.model.OrderHistory;
-import com.karakat.spring.Canteen.model.Orders;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
