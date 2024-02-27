@@ -1,4 +1,5 @@
 package com.karakat.spring.Canteen.dto;
+import enums.Category;
 import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,6 +12,5 @@ public class DishDto {
     private String name;
     private Double price;
     private String description;
-    private String category;
-    private String image;
+    private Category category;
 }

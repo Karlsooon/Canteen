@@ -58,7 +58,6 @@ public class DishServiceImpl implements DishService {
         dish.setName(dishDto.getName());
         dish.setCategory(dishDto.getCategory());
         dish.setPrice(dishDto.getPrice());
-        dish.setCategory(dishDto.getCategory());
 
         Dish updated = dishRepository.save(dish);
         return dishMapper.toDto(updated);
