@@ -1,5 +1,6 @@
 package com.karakat.spring.Canteen.model;
 
+import enums.Category;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,7 +27,8 @@ public class Dish {
     @Lob
     private String image;
     @Column(name = "category")
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private Category category;
     @Column(name = "ordersList")
     @ManyToMany(mappedBy = "dishList")
     private List<Orders> ordersList;
