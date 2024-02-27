@@ -1,8 +1,0 @@
-{
-  "realm":"CanteenWeb",
-  "auth-server-url": "http://localhost:8484",
-  "resource": "canteenweb",
-  "credentials": {
-    "secret": "raScavNze3K4o0RmGvSzSgz12XmYOY78"
-  }
-}

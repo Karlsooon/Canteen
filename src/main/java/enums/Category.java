@@ -1,4 +1,4 @@
 package enums;
 
-public enum Category {
+public enum Category  {
 }
