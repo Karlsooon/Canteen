@@ -46,10 +46,7 @@ public class OrderController {
 
     }
 
-//    @PostMapping("/{id}/addDish")
-//    public OrderDto addDish(@PathVariable Long id,@RequestParam List<Long> dishDtoIds) {
-//        return orderServiceImpl.addDish(id,dishDtoIds);
-//    }
+
 
 
 }
