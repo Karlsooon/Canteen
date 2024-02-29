@@ -30,7 +30,6 @@ public class DishController {
 
     }
 
-//    @PreAuthorize("hasRole('admin')")
     @PostMapping(value = "/create", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<DishDto> createDish(@ModelAttribute DishDto dishDto, @RequestParam("image") MultipartFile imageFile)  {
         return ResponseEntity.status(HttpStatus.CREATED).body(dishService.save(dishDto, imageFile));
