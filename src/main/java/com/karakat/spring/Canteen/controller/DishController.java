@@ -36,13 +36,12 @@ public class DishController {
         return ResponseEntity.status(HttpStatus.CREATED).body(dishService.save(dishDto, imageFile));
     }
     @PostMapping(value = "/update")
-//    @PreAuthorize("hasRole('admin')")
     public ResponseEntity<DishDto> updateDish(@ModelAttribute DishDto dishDto){
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(dishService.updateDish(dishDto));
     }
 
     @PostMapping("/delete/{id}")
-//    @PreAuthorize("hasRole('admin')")
+
     public ResponseEntity<String> deleteDish(@ModelAttribute DishDto dishDto, @PathVariable Long id){
         return dishService.deleteDish(dishDto,id);
     }
