@@ -1,6 +1,5 @@
 package com.karakat.spring.Canteen.controller;
 
-//import com.karakat.spring.Canteen.dto.OrderDto;
 import com.karakat.spring.Canteen.dto.OrderDto;
 import com.karakat.spring.Canteen.service.impl.OrderServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -46,10 +45,7 @@ public class OrderController {
 
     }
 
-//    @PostMapping("/{id}/addDish")
-//    public OrderDto addDish(@PathVariable Long id,@RequestParam List<Long> dishDtoIds) {
-//        return orderServiceImpl.addDish(id,dishDtoIds);
-//    }
+
 
 
 }
